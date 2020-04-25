@@ -1,0 +1,72 @@
+Problem Statement:
+===================
+
+Given a linked list of N positive integers. You need to swap elements pairwise. Your task is to complete the function pairwise_swap().
+
+Input:
+The input line contains T, denoting the number of testcases. Each testcase contains two lines, the first line contains N(size of linked list). The second line contains N elements of linked list separately.
+
+Output:
+For each testcase, in new line, print the modified linked list.
+
+User Task:
+Since this is a functional problem you don't have to worry about input and output, you just have to complete the function pairwise_swap(). The printing is done automatically by the driver code.
+
+Constraint:
+1 <= T <= 100
+1 <= N <= 100
+1 <= Node values <= 1000
+
+Example:
+Input:
+2
+7
+1 2 3 4 5 6 7
+6
+1 2 3 4 5 6
+Output:
+2 1 4 3 6 5 7
+2 1 4 3 6 5
+
+Explanation:
+Testcase 1: The linked list after swapping becomes: 1 2 3 4 5 6 7 -> 2 1 4 3 6 5 7.
+Testcase 2: The linked list after swapping becomes: 1 2 3 4 5 6 -> 2 1 4 3 6 5.
+
+Solution:
+==========
+
+/*
+struct Node {
+  int data;
+  struct Node *next;
+  Node(int x) {
+    data = x;
+    next = NULL;
+  }
+};
+*/
+
+void swap(Node **head){
+    Node* tmp;
+    if(head == NULL || (*head)->next  == NULL){
+      return;
+    }
+    tmp = *head;
+    *head = (*head)->next;
+    tmp->next = (*head)->next;
+    (*head)->next = tmp;
+    return;
+}
+
+struct Node* pairwise_swap(struct Node* head)
+{
+    Node *curr = new Node(-1);
+    Node *tmp = curr;
+    curr->next = head;
+    while(curr && curr->next){
+        swap(&(curr->next));
+        curr = curr->next->next;
+    }
+    return tmp->next;
+    
+}

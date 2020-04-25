@@ -1,0 +1,31 @@
+
+
+
+Problem statement:
+============
+'''
+	Your task is to detect if any loop is present 
+	in the given linked list.
+	
+	Function Arguments: head (reference to head of the linked list)
+	Return Type: True or False (boolean)
+
+	{
+		# Node Class
+		class Node:
+		    def __init__(self, data):   # data -> value stored in node
+		        self.data = data
+		        self.next = None
+	}
+
+'''
+Solution:
+=========
+
+def detectLoop(head):
+  while head:
+      if hasattr(head, 'visited') == True:
+          return True
+      head.visited = True
+      head = head.next
+  return False;

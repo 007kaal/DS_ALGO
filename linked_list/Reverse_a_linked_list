@@ -1,0 +1,52 @@
+Problem Statement:
+=================
+
+Given a linked list of N nodes. The task is to reverse this list.
+
+Input: Head of following linked list
+1->2->3->4->NULL
+Output: Linked list should be changed to,
+4->3->2->1->NULL
+
+Input: Head of following linked list
+1->2->3->4->5->NULL
+Output: Linked list should be changed to,
+5->4->3->2->1->NULL
+
+Input: NULL
+Output: NULL
+
+Input: 1->NULL
+Output: 1->NULL
+
+Solution :
+==========
+/*
+struct Node {
+  int data;
+  struct Node *next;
+  Node(int x) {
+    data = x;
+    next = NULL;
+  }
+};
+*/
+
+Node * reverse(Node *node, Node** head){
+    Node * tail;
+    if(node == NULL || node->next == NULL){
+        *head = node;
+        return node;
+    }
+    tail = reverse(node->next, head);
+    tail->next = node;
+    node->next = NULL;
+    return node;
+}
+// Should reverse list and return new head.
+Node* reverseList(Node *head)
+{
+  reverse(head, &head);
+  return head;
+}
+
