@@ -1,0 +1,94 @@
+Problem Statement:
+=================
+
+There are two singly linked lists of size N and M in a system. But, due to some programming error the end node of one of the linked list got linked into one of the node of second list, forming a inverted Y shaped list. Write a program to get the point where two linked lists intersect each other.
+
+Y ShapedLinked List
+
+Input:
+First line of input is the number of test cases T. Every test case has four lines. First line of every test case contains three numbers, x (number of nodes before merge point in 1st list), y (number of nodes before merge point in 2nd list) and z (number of nodes after merge point). Next three lines contain x, y and z values.
+
+Output:
+Print the data of the node in the linked list where two linked lists intersects.
+
+Your Task:
+The task is to complete the function intersetPoint() which finds the point of intersection of two linked list. The function should return data value of a node where two linked lists merge. If linked list do not merge at any point, then it should return -1.
+
+Constraints:
+1 <= T <= 50
+1 <= N <= 100
+1 <= value <= 1000
+
+Example:
+Input:
+2
+2 3 2
+10 20
+30 40 50
+5 10
+2 3 2
+10 20
+30 40 50
+10 20
+Output:
+5
+10
+
+Explanation:
+Testcase 1: The point of intersection of two linked list is 5, means both of them get linked (intersects) with each other at node whose value is 5.
+Testcase 2: The point of intersection of two linked list is 10. Hence, output is 10.
+
+Solution:
+=========
+
+/* Linked List Node
+struct Node {
+  int data;
+  struct Node *next;
+  Node(int x) {
+    data = x;
+    next = NULL;
+  }
+}; */
+
+/* Should return data of intersection point of two linked
+   lists head1 and head2.
+   If there is no intersecting point, then return -1. */
+
+int len(Node* head){
+    int len = 0;
+    while(head){
+        head = head->next;
+        len++;
+    }
+    return len;
+}
+
+Node* kth_node(Node *head, int k){
+    while(k--){
+        head = head->next;
+    }
+    return head;
+}
+
+
+int intersectPoint(Node* head1, Node* head2)
+{
+    // Your Code Here
+    int len1 = len(head1);
+    int len2 = len(head2);
+    if (len2 > len1){
+        head2 = kth_node(head2, len2 - len1);
+    }else{
+        head1 = kth_node(head1, len2 - len1);
+    }
+    while(head1 && head2){
+        if (head1 == head2){
+            return head1->data;
+        }
+        head1 = head1->next;
+        head2 = head2->next;
+    }
+    return -1;
+}
+

@@ -1,0 +1,104 @@
+Problem Statement:
+===================
+Given Pointer/Reference to the head of the linked list, the task is to Sort the given linked list using Merge Sort.
+Note: If the length of linked list is odd, then the extra node should go in the first list while splitting.
+
+Input:
+First line of input contains number of testcases T. For each testcase, first line of input contains number of nodes in the linked list and next line contains N elements of the linked list.
+
+Output:
+For each test, in a new line, print the sorted linked list.
+
+Your Task:
+For C++ and Python: The task is to complete the function mergeSort() which sort the linked list using merge sort function.
+For Java: The task is to complete the function mergeSort() and return the node which can be used to print the sorted linked list.
+
+Constraints:
+1 <= T <= 100
+1 <= N <= 105
+
+Example:
+Input:
+2
+5
+3 5 2 4 1
+3
+9 15 0
+Output:
+1 2 3 4 5
+0 9 15
+
+Explanation:
+Testcase 1: After sorting the given linked list, the resultant matrix will be 1->2->3->4->5.
+Testcase 2: After sorting the given linked list , resultant will be 0->9->15.
+
+Solution:
+=============
+
+
+/* Structure of the linked list node is as
+struct Node 
+{
+    int data;
+    struct Node* next;
+    Node(int x) { data = x;  next = NULL; }
+};
+*/
+void split_half(Node *head, Node** half){
+    Node* slow=head;
+    Node* fast=head;
+    while(fast && fast->next && fast->next->next){
+       slow = slow->next;
+       fast = fast->next->next;
+    }
+    
+    *half = slow->next;
+    slow->next = NULL;
+    return;
+}
+
+void insert_node(Node** head, Node** tail, Node* tmp){
+    if (*head == NULL){
+        *head = *tail = tmp;
+    }else{
+        (*tail)->next = tmp;
+        *tail = (*tail)->next;
+        (*tail)->next = NULL;
+    }
+    
+}
+
+Node* merge(Node* a, Node* b){
+    Node* head = NULL;
+    Node * tail = NULL;
+    Node *tmp;
+    while(a && b){
+        if(a->data < b->data){
+            tmp = a;
+            a = a->next;
+        }else{
+            tmp = b;
+            b = b->next;
+        }
+        insert_node(&head,&tail,tmp);
+    }
+    tail->next = a != NULL ? a : b; 
+    return head;
+}
+
+
+/* Function to mergesort the linked list
+   It should return head of the modified list  */
+Node* mergeSort(Node* head) {
+    Node* a = NULL;
+    Node* b =NULL;
+    
+    if((head ==NULL) || (head->next == NULL)){
+        return head;
+    }
+    split_half(head,&b);
+    a=mergeSort(head);
+    b=mergeSort(b);
+    return merge(a,b);
+}
+

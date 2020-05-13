@@ -1,0 +1,89 @@
+Problem Statement:
+================
+Given a linked list of N nodes where nodes can contain values 0s, 1s and 2s only. The task is to segregate 0s, 1s and 2s linked list such that all zeros segregate to headside, 2s at the end of the linked list and 1s in the mid of 0s and 2s.
+
+Input:
+First line of input contains number of testcases T. For each testcase, first line of input contains length of linked list and next line contains N elements as the data in the linked list.
+
+Output:
+For each testcase, segregate the 0s, 1s and 2s and display the linked list.
+
+Your Task:
+The task is to complete the function segregate() which segregate the nodes in the linked list as asked in the problem statement. The printing is done automatically by the driver code.
+
+Constraints:
+1 <= T <= 100
+1 <= N <= 103
+
+User Task:
+The task is to complete the function sortList() which takes head reference as the argument and returns void.
+
+Example:
+Input:
+2
+8
+1 2 2 1 2 0 2 2
+4
+2 2 0 1
+Output:
+0 1 1 2 2 2 2 2
+0 1 2 2
+
+Explanation:
+Testcase 1: All the 0s are segregated to left end of the linked list, 2s to the right end of the list and 1s in between.
+Testcase 2: After arranging all the 0s,1s and 2s in the given format , output will be 0 1 2 2.
+
+Solution:
+=========
+
+/*
+  Sort the list of 0's,1's and 2's
+  The input list will have at least one element
+  Node is defined as
+  struct Node {
+    int data;
+    struct Node *next;
+    Node(int x) {
+        data = x;
+        next = NULL;
+    }
+};
+
+*/
+
+// This function is to segregate the elememtns in the linked list
+// This will do the required arrangement by changing the links
+Node* segregate(Node *head) {
+    Node * zeroD = new Node(0);
+    Node * firstD = new Node(0);
+    Node * secD = new Node(0);
+    
+    Node *zero = zeroD, *first=firstD, *sec = secD;
+    
+    while(head){
+        if(head->data == 0){
+            zero->next = head;
+            zero = head;
+        }
+        else if(head->data == 1){
+            first->next = head;
+            first = head;
+        }
+        else{
+            sec->next = head;
+            sec = head;
+        }
+        head = head->next;
+    }
+    sec->next = NULL;
+    first->next = secD->next;
+    zero->next = firstD->next;
+
+    head = zeroD->next;
+    
+    delete zeroD;
+    delete firstD;
+    delete secD;
+    
+    return head;
+}
