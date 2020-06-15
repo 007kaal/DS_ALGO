@@ -1,0 +1,85 @@
+Problem Statement:
+==================
+
+Given a postfix expression, the task is to evaluate the expression and print the final value. Operators will only include the basic arithmetic operators like *,/,+ and -.
+
+Input:
+The first line of input will contains an integer T denoting the no of test cases . Then T test cases follow. Each test case contains an postfix expression.
+
+Output:
+For each test case, in a new line, evaluate the postfix expression and print the value.
+
+Your Task:
+This is a function problem. You need to complete the function evaluatePostfixExpression() that takes the string denoting the expression as input and returns the evaluated value.
+
+Expected Time Complexity : O(n)
+Expected Auixilliary Space : O(n)
+
+Constraints:
+1 <= T <= 1000
+1 <= length of expression <= 1000
+
+Example:
+Input:
+2
+231*+9-
+123+*8-
+Output:
+-4
+-3
+
+Explanation:
+Testcase 1: After solving the given expression, we have -4 as result.
+Testcase 2: After solving the given postfix expression , we have -3 as result.
+
+Solution:
+=========
+/*
+Algorithm:
+1. scan the string from left to right.
+2. check if digit, store that in the stack
+3. Else if it is a operator, pop the last two items from the stack and calculate the expression and 
+   store the result in the stack.
+*/
+
+int operation(char operator_, int oper1, int oper2){
+    int result = 0;
+    if(operator_ == '^'){
+        result = oper1 ^ oper2;
+    }
+    else if(operator_ == '*'){
+        result = oper1 * oper2;
+    }
+    else if(operator_ == '/'){
+        result = oper1 / oper2;
+    }
+    else if(operator_ == '+'){
+        result = oper1 + oper2;
+    }
+    else if(operator_ == '-'){
+        result = oper1 - oper2;
+    }
+    return result;
+}
+
+// The main function that returns value of a given postfix expression
+int evaluatePostfix(string &str)
+{
+    stack <int> s;
+    int result = 0;
+    int oper1, oper2;
+    for(std::string::iterator it = str.begin(); it != str.end(); ++it){
+       if(isdigit(*it)){
+           s.push((*it) - '0');
+       } 
+       else{
+           oper2 = s.top();
+           s.pop();
+           oper1 = s.top();
+           s.pop();
+           result = operation(*it, oper1, oper2);
+           s.push(result);
+       }
+    }
+    return s.top();
+}
